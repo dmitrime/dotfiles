@@ -1,4 +1,5 @@
 set nocompatible
+set modelines=0
 filetype off
 
 " vundle setup
@@ -6,17 +7,104 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-repeat'
+Bundle 'wincent/Command-T'
+Bundle 'kevinw/pyflakes-vim'
+Bundle 'altercation/vim-colors-solarized'
+Bundle 'scrooloose/nerdtree'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'msanders/snipmate.vim'
+Bundle 'ervandew/supertab'
+Bundle 'majutsushi/tagbar'
+Bundle 'bufexplorer.zip'
 
 filetype plugin indent on
 
-set cindent
-set ruler
-set number
-set sw=4
-set expandtab
-set tabstop=4
-set foldmethod=marker
-set nohlsearch
-colorscheme desert
-set nobackup
 set encoding=utf-8
+
+" Tabs
+set shiftwidth=4
+set tabstop=4
+set expandtab
+
+set autoindent
+" Show curson row,col
+set ruler
+" Show line numbers
+set number
+" Fast terminal connection
+set ttyfast
+" Command completion menu on tab
+set wildmenu
+" Current cursor line
+set cursorline
+" Show command being currently typed
+set showcmd
+" Place a marker when folding
+set foldmethod=marker
+" Scroll +2 lines
+set scrolloff=2
+" Show status line always
+set laststatus=2
+
+" Undo files even after saving
+set undofile
+set undodir=~/.vim/sessions/undo
+" Backup dir
+set backupdir=~/.vim/sessions
+set dir=~/.vim/sessions
+
+" Comma leader
+let mapleader=","
+
+" Search
+" Ignore case...
+set ignorecase
+" But use case when there is uppercase in string
+set smartcase
+" Incremental search with match-as-you-type 
+set incsearch
+set showmatch
+" No highlighting
+set nohlsearch
+
+" Substitute globally on lines
+set gdefault
+
+" Wrap lines
+set wrap
+set textwidth=79
+
+" Stop hitting F1 when aiming for ESC
+inoremap <F1> <ESC>
+nnoremap <F1> <ESC>
+vnoremap <F1> <ESC>
+
+" Make ; be : in normal mode
+nnoremap ; :
+
+" Quickly select pasted text
+nnoremap <leader>v V`]
+" Quickly open ~/.vimrc
+nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
+" Quick vertical split window
+nnoremap <leader>w <C-w>v<C-w>l
+" Move around windows easier
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Toggle nerdtree
+nnoremap <leader>T :NERDTreeToggle<CR>
+" Toggle tagbar
+nnoremap <leader>B :TagbarToggle<CR>
+
+" Force write file as sudo hack
+cmap w!! w !sudo tee > /dev/null %
+
+set t_Co=256
+set background=dark
+colorscheme molokai
+
