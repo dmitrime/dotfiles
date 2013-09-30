@@ -13,8 +13,6 @@ Git submodule:
     git submodule init
     git submodule update
 
-BundleInstall
-
 In Vim:
     
     :BundleInstall
