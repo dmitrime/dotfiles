@@ -7,6 +7,14 @@ Symlinks:
     ln -s ~/dotfiles/vim ~/.vim    
     ln -s ~/dotfiles/vim/vimrc ~/.vimrc
 
+Git submodule:
+
+    cd ~/dotfiles
+    git submodule init
+    git submodule update
+
+BundleInstall
+
 In Vim:
     
     :BundleInstall
