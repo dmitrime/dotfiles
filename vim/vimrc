@@ -1,0 +1,22 @@
+set nocompatible
+filetype off
+
+" vundle setup
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+Bundle 'tpope/vim-fugitive'
+
+filetype plugin indent on
+
+set cindent
+set ruler
+set number
+set sw=4
+set expandtab
+set tabstop=4
+set foldmethod=marker
+set nohlsearch
+colorscheme desert
+set nobackup
+set encoding=utf-8

@@ -1,4 +1,5 @@
 dotfiles
 ========
 
-Linux config files
+My linux configuration files in one place.
+
