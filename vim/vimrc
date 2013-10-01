@@ -110,6 +110,15 @@ nnoremap <leader>B :TagbarToggle<CR>
 " Toggle bufxplorer
 nnoremap <leader>E :BufExplorer<CR>
 
+" Delete a line
+nnoremap <C-d> dd
+
+" Return to last edit position when opening files
+autocmd BufReadPost *
+            \ if line("'\"") > 0 && line("'\"") <= line("$") |
+            \   exe "normal! g`\"" |
+            \ endif
+
 " Force write file as sudo hack
 cmap w!! w !sudo tee > /dev/null %
 
