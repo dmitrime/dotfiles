@@ -15,7 +15,7 @@ Bundle 'altercation/vim-colors-solarized'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'msanders/snipmate.vim'
-Bundle 'ervandew/supertab'
+" Bundle 'ervandew/supertab'
 Bundle 'majutsushi/tagbar'
 Bundle 'bufexplorer.zip'
 
@@ -46,7 +46,7 @@ set foldmethod=marker
 " Scroll +2 lines
 set scrolloff=2
 " Show status line always
-set laststatus=2
+set laststatus=2 statusline=%02n:%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 
 " Undo files even after saving
 set undofile
@@ -96,13 +96,23 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
+" Buffers
+map <leader>a :bprev<CR>
+map <leader>s :bnext<CR>
+map <leader>d :bd<CR>
+
+" Toggle command-t
+nnoremap <leader>t :CommandT<CR>
 " Toggle nerdtree
 nnoremap <leader>T :NERDTreeToggle<CR>
 " Toggle tagbar
 nnoremap <leader>B :TagbarToggle<CR>
+" Toggle bufxplorer
+nnoremap <leader>E :BufExplorer<CR>
 
 " Force write file as sudo hack
 cmap w!! w !sudo tee > /dev/null %
+
 
 set t_Co=256
 set background=dark
