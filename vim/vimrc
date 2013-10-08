@@ -96,11 +96,16 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
+" Make window wider or narrower
+nnoremap <C-h> <C-W><
+nnoremap <C-l> <C-W>>
+
 " Buffers
-map <leader>a :bprev<CR>
-map <leader>s :bnext<CR>
+map <C-[> :bprev<CR>
+map <C-]> :bnext<CR>
 map <leader>d :bd<CR>
 
+set autochdir
 " Toggle command-t
 nnoremap <leader>t :CommandT<CR>
 " Toggle nerdtree
