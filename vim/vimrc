@@ -101,9 +101,9 @@ nnoremap <C-h> <C-W><
 nnoremap <C-l> <C-W>>
 
 " Buffers
-map <C-[> :bprev<CR>
-map <C-]> :bnext<CR>
-map <leader>d :bd<CR>
+nnoremap <C-z> :bprev<CR>
+nnoremap <C-x> :bnext<CR>
+nnoremap <leader>d :bd<CR>
 
 set autochdir
 " Toggle command-t
