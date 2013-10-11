@@ -10,7 +10,7 @@ Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-repeat'
 Bundle 'wincent/Command-T'
-Bundle 'kevinw/pyflakes-vim'
+" Bundle 'kevinw/pyflakes-vim'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/nerdcommenter'
@@ -101,8 +101,8 @@ nnoremap <C-h> <C-W><
 nnoremap <C-l> <C-W>>
 
 " Buffers
-nnoremap <C-z> :bprev<CR>
-nnoremap <C-x> :bnext<CR>
+nnoremap <C-x> :bprev<CR>
+nnoremap <C-c> :bnext<CR>
 nnoremap <leader>d :bd<CR>
 
 set autochdir
@@ -130,5 +130,5 @@ cmap w!! w !sudo tee > /dev/null %
 
 set t_Co=256
 set background=dark
-colorscheme molokai
+colorscheme mustang
 
