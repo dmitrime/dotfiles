@@ -6,11 +6,15 @@ filetype off
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
+" Plugins
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-repeat'
 Bundle 'wincent/Command-T'
 " Bundle 'kevinw/pyflakes-vim'
+Bundle 'mileszs/ack.vim'
+Bundle 'vim-scripts/pep8'
+Bundle 'sontek/rope-vim'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/nerdcommenter'
@@ -28,6 +32,7 @@ set shiftwidth=4
 set tabstop=4
 set expandtab
 
+" Indent
 set autoindent
 " Show curson row,col
 set ruler
@@ -97,8 +102,8 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 " Make window wider or narrower
-nnoremap <C-h> <C-W><
-nnoremap <C-l> <C-W>>
+nnoremap <C-Left> <C-W><
+nnoremap <C-Right> <C-W>>
 
 " Buffers
 nnoremap <C-x> :bprev<CR>
@@ -114,9 +119,13 @@ nnoremap <leader>T :NERDTreeToggle<CR>
 nnoremap <leader>B :TagbarToggle<CR>
 " Toggle bufxplorer
 nnoremap <leader>E :BufExplorer<CR>
+" Toggle Ack
+nnoremap <leader>a <Esc>:Ack!
 
 " Delete a line
 nnoremap <C-d> dd
+" Easy escape
+inoremap <leader>. <Esc>
 
 " Return to last edit position when opening files
 autocmd BufReadPost *
