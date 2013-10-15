@@ -30,7 +30,7 @@ set encoding=utf-8
 " Tabs
 set shiftwidth=4
 set tabstop=4
-set expandtab
+" set expandtab
 
 " Indent
 set autoindent
