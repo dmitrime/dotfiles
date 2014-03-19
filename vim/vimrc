@@ -22,6 +22,7 @@ Bundle 'msanders/snipmate.vim'
 " Bundle 'ervandew/supertab'
 Bundle 'majutsushi/tagbar'
 Bundle 'bufexplorer.zip'
+Bundle 'vim-scripts/py_jump.vim'
 
 filetype plugin indent on
 
@@ -30,7 +31,7 @@ set encoding=utf-8
 " Tabs
 set shiftwidth=4
 set tabstop=4
-" set expandtab
+set expandtab
 
 " Indent
 set autoindent
@@ -43,7 +44,7 @@ set ttyfast
 " Command completion menu on tab
 set wildmenu
 " Current cursor line
-set cursorline
+"set cursorline
 " Show command being currently typed
 set showcmd
 " Place a marker when folding
@@ -52,6 +53,8 @@ set foldmethod=marker
 set scrolloff=2
 " Show status line always
 set laststatus=2 statusline=%02n:%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+" Hidden buffer
+set hidden
 
 " Undo files even after saving
 set undofile
@@ -62,24 +65,29 @@ set dir=~/.vim/sessions
 
 " Comma leader
 let mapleader=","
+" Go to row + col for mark
+nnoremap ' `
+
 
 " Search
 " Ignore case...
 set ignorecase
 " But use case when there is uppercase in string
 set smartcase
-" Incremental search with match-as-you-type 
+" Incremental search with match-as-you-type
 set incsearch
 set showmatch
 " No highlighting
 set nohlsearch
+" Paste toggle
+set pastetoggle=<F2>
 
 " Substitute globally on lines
 set gdefault
 
 " Wrap lines
-set wrap
-set textwidth=79
+" set wrap
+"set textwidth=79
 
 " Stop hitting F1 when aiming for ESC
 inoremap <F1> <ESC>
@@ -89,28 +97,30 @@ vnoremap <F1> <ESC>
 " Make ; be : in normal mode
 nnoremap ; :
 
+" Just like D
+nnoremap Y y$
+
 " Quickly select pasted text
 nnoremap <leader>v V`]
 " Quickly open ~/.vimrc
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
+nnoremap <leader>eb <C-w><C-v><C-l>:e ~/.bashrc<cr>
 " Quick vertical split window
 nnoremap <leader>w <C-w>v<C-w>l
+" Quick horizontal split window
+nnoremap <leader>W <C-w>s
 " Move around windows easier
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" Make window wider or narrower
-nnoremap <C-Left> <C-W><
-nnoremap <C-Right> <C-W>>
-
 " Buffers
 nnoremap <C-x> :bprev<CR>
 nnoremap <C-c> :bnext<CR>
 nnoremap <leader>d :bd<CR>
 
-set autochdir
+" set autochdir
 " Toggle command-t
 nnoremap <leader>t :CommandT<CR>
 " Toggle nerdtree
@@ -121,11 +131,17 @@ nnoremap <leader>B :TagbarToggle<CR>
 nnoremap <leader>E :BufExplorer<CR>
 " Toggle Ack
 nnoremap <leader>a <Esc>:Ack!
+" Toggle nerdcommenter comments C-_ is actually C-/
+nmap <C-_> <leader>c<Space>
+vmap <C-_> <leader>c<Space>
 
 " Delete a line
 nnoremap <C-d> dd
 " Easy escape
 inoremap <leader>. <Esc>
+
+" Remove trailing whitespaces
+" autocmd BufWritePre * :%s/\s\+$//e
 
 " Return to last edit position when opening files
 autocmd BufReadPost *
@@ -139,5 +155,5 @@ cmap w!! w !sudo tee > /dev/null %
 
 set t_Co=256
 set background=dark
-colorscheme mustang
+colorscheme grb256
 
