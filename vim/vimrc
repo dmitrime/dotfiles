@@ -7,13 +7,17 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " Plugins
+Bundle 'mileszs/ack.vim'
+Bundle 'vim-scripts/swap-parameters'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-repeat'
 Bundle 'wincent/Command-T'
+Bundle 'fatih/vim-go'
+"Bundle 'kien/ctrlp.vim'
 " Bundle 'kevinw/pyflakes-vim'
-Bundle 'mileszs/ack.vim'
-Bundle 'vim-scripts/pep8'
+Bundle 'nvie/vim-flake8'
+"Bundle 'vim-scripts/pep8'
 Bundle 'sontek/rope-vim'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'scrooloose/nerdtree'
@@ -115,10 +119,17 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
+" Make window wider or narrower
+nnoremap <C-W>h 10<C-W><
+nnoremap <C-W>l 10<C-W>>
+nnoremap <C-W>j 10<C-w>-
+nnoremap <C-W>k 10<C-w>+
+
 " Buffers
-nnoremap <C-x> :bprev<CR>
-nnoremap <C-c> :bnext<CR>
+nnoremap <leader>x :bprev<CR>
+nnoremap <leader>c :bnext<CR>
 nnoremap <leader>d :bd<CR>
+nnoremap <leader>D :b#<CR>
 
 " set autochdir
 " Toggle command-t
@@ -157,3 +168,7 @@ set t_Co=256
 set background=dark
 colorscheme grb256
 
+" Flake8 on write
+"autocmd BufWritePost *.py call Flake8()
+
+autocmd BufRead,BufNewFile *.jsm set filetype=javascript
