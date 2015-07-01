@@ -27,6 +27,7 @@ Bundle 'msanders/snipmate.vim'
 Bundle 'majutsushi/tagbar'
 Bundle 'bufexplorer.zip'
 Bundle 'vim-scripts/py_jump.vim'
+Bundle 'kovisoft/slimv'
 
 filetype plugin indent on
 
@@ -172,3 +173,9 @@ colorscheme grb256
 "autocmd BufWritePost *.py call Flake8()
 
 autocmd BufRead,BufNewFile *.jsm set filetype=javascript
+
+au FileType go nmap <Leader>i <Plug>(go-info)
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>s <Plug>(go-test)
