@@ -11,8 +11,8 @@ alias gb='git branch'
 export WORKON_HOME=~/dev/virt-env
 . /usr/local/bin/virtualenvwrapper.sh
 
-if [ -f ~/dotfiles/git-completion.bash  ]; then
-      source ~/dotfiles/git-completion.bash
+if [ -f ~/dev/dotfiles/git-completion.bash  ]; then
+      source ~/dev/dotfiles/git-completion.bash
 fi
 
 # export GOPATH=/home/dmitri/dev/go
