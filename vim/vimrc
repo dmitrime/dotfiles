@@ -20,7 +20,7 @@ Plugin 'fatih/vim-go'
 " Plugin 'kevinw/pyflakes-vim'
 Plugin 'nvie/vim-flake8'
 "Plugin 'vim-scripts/pep8'
-Plugin 'sontek/rope-vim'
+"Plugin 'sontek/rope-vim'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
@@ -30,7 +30,15 @@ Plugin 'majutsushi/tagbar'
 Plugin 'bufexplorer.zip'
 Plugin 'vim-scripts/py_jump.vim'
 Plugin 'kovisoft/slimv'
-Plugin 'derekwyatt/vim-scala'
+Plugin 'ConradIrwin/vim-bracketed-paste'
+Plugin 'tpope/vim-fireplace'
+Plugin 'guns/vim-clojure-static'
+" Plugin 'vim-airline/vim-airline'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'vim-scripts/paredit.vim'
+
+call vundle#end()
+
 
 filetype plugin indent on
 
@@ -168,16 +176,18 @@ autocmd BufReadPost *
 " Force write file as sudo hack
 cmap w!! w !sudo tee > /dev/null %
 
+" autocmd VimEnter * NERDTree
 
 set t_Co=256
 set background=dark
-colorscheme grb256
+colorscheme slate
 
 " Flake8 on write
 "autocmd BufWritePost *.py call Flake8()
 
 autocmd BufRead,BufNewFile *.jsm set filetype=javascript
 
+" Go
 au FileType go nmap <Leader>i <Plug>(go-info)
 au FileType go nmap <Leader>gd <Plug>(go-doc)
 au FileType go nmap <leader>r <Plug>(go-run)
