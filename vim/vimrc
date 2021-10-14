@@ -2,53 +2,53 @@ set nocompatible
 set modelines=0
 filetype off
 
-" vundle setup
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" Let Vundle manage itself
-Plugin 'VundleVim/Vundle.vim'
+" Specify a directory for plugins
+" - For Neovim: stdpath('data') . '/plugged'
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+" LSP
+Plug 'neovim/nvim-lspconfig'
+Plug 'kabouzeid/nvim-lspinstall'
+Plug 'nvim-lua/lsp-status.nvim'
+Plug 'ray-x/lsp_signature.nvim'
 
-" Plugins
-Plugin 'mileszs/ack.vim'
-Plugin 'vim-scripts/swap-parameters'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-repeat'
-Plugin 'wincent/Command-T'
-Plugin 'fatih/vim-go'
-" Plugin 'kien/ctrlp.vim'
-" Plugin 'kevinw/pyflakes-vim'
-Plugin 'nvie/vim-flake8'
-"Plugin 'vim-scripts/pep8'
-"Plugin 'sontek/rope-vim'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'msanders/snipmate.vim'
-" Plugin 'ervandew/supertab'
-Plugin 'majutsushi/tagbar'
-Plugin 'bufexplorer.zip'
-Plugin 'vim-scripts/py_jump.vim'
-Plugin 'kovisoft/slimv'
-Plugin 'ConradIrwin/vim-bracketed-paste'
-Plugin 'tpope/vim-fireplace'
-Plugin 'guns/vim-clojure-static'
-" Plugin 'vim-airline/vim-airline'
-Plugin 'vim-syntastic/syntastic'
-Plugin 'vim-scripts/paredit.vim'
+" Telescope
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
-call vundle#end()
+" TreeSitter 
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-refactor'
+
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'hrsh7th/nvim-compe'
+Plug 'windwp/nvim-autopairs'
+
+Plug 'ConradIrwin/vim-bracketed-paste'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
+" Themes
+Plug 'morhetz/gruvbox'
+Plug 'arcticicestudio/nord-vim'
+Plug 'altercation/vim-colors-solarized'
+" Initialize plugin system
+call plug#end()
 
 
 filetype plugin indent on
-
 set encoding=utf-8
+syn on
 
 " Tabs
 set shiftwidth=4
 set tabstop=4
 set expandtab
-syn on
 
 " Indent
 set autoindent
@@ -68,8 +68,6 @@ set showcmd
 set foldmethod=marker
 " Scroll +2 lines
 set scrolloff=2
-" Show status line always
-set laststatus=2 statusline=%02n:%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 " Hidden buffer
 set hidden
 
@@ -85,6 +83,13 @@ let mapleader=","
 " Go to row + col for mark
 nnoremap ' `
 
+" color theme
+set termguicolors
+set background=dark
+colorscheme gruvbox
+
+" Use OSX clipboard to copy and to paste
+set clipboard+=unnamedplus
 
 " Search
 " Ignore case...
@@ -121,7 +126,7 @@ nnoremap Y y$
 nnoremap <leader>v V`]
 " Quickly open ~/.vimrc
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
-nnoremap <leader>eb <C-w><C-v><C-l>:e ~/.bashrc<cr>
+nnoremap <leader>ez <C-w><C-v><C-l>:e ~/.zshrc<cr>
 " Quick vertical split window
 nnoremap <leader>w <C-w>v<C-w>l
 " Quick horizontal split window
@@ -139,26 +144,36 @@ nnoremap <C-W>j 10<C-w>-
 nnoremap <C-W>k 10<C-w>+
 
 " Buffers
-nnoremap <leader>x :bprev<CR>
+nnoremap <leader>b :buffers<CR>
 nnoremap <leader>c :bnext<CR>
-nnoremap <leader>d :bd<CR>
+nnoremap <leader>x :bprev<CR>
+nnoremap <leader>d :bp\|bd #<CR>
 nnoremap <leader>D :b#<CR>
 
+" Telescope
+nnoremap <leader>t  <cmd>Telescope find_files<cr>
+nnoremap <leader>tl <cmd>Telescope live_grep<cr>
+nnoremap <leader>tg <cmd>Telescope grep_string<cr>
+nnoremap <leader>tb <cmd>Telescope buffers<cr>
+nnoremap <leader>ta <cmd>Telescope lsp_code_actions<cr>
+vnoremap <leader>ta <cmd>Telescope lsp_range_code_actions<cr>
+vnoremap <leader>td <cmd>Telescope lsp_document_diagnostics<cr>
+vnoremap <leader>tw <cmd>Telescope lsp_workspace_diagnostics<cr>
+nnoremap <leader>tt <cmd>Telescope lsp_type_definitions<cr>
+nnoremap gd    <cmd>Telescope lsp_definitions<cr>
+nnoremap <C-]> <cmd>Telescope lsp_definitions<cr>
+nnoremap gi    <cmd>Telescope lsp_implementations<cr>
+nnoremap gr    <cmd>Telescope lsp_references<cr>
+
 " set autochdir
-" Toggle command-t
-nnoremap <leader>t :CommandT<CR>
-" Toggle nerdtree
-nnoremap <leader>T :NERDTreeToggle<CR>
-" Toggle tagbar
-nnoremap <leader>B :TagbarToggle<CR>
-" Toggle bufxplorer
-nnoremap <leader>E :BufExplorer<CR>
 " Toggle Ack
 nnoremap <leader>a <Esc>:Ack!
 " Toggle nerdcommenter comments C-_ is actually C-/
 nmap <C-_> <leader>c<Space>
 vmap <C-_> <leader>c<Space>
 
+" Delete word backward
+nnoremap dW vb"_d
 " Delete a line
 nnoremap <C-d> dd
 " Easy escape
@@ -176,20 +191,30 @@ autocmd BufReadPost *
 " Force write file as sudo hack
 cmap w!! w !sudo tee > /dev/null %
 
-" autocmd VimEnter * NERDTree
-
-set t_Co=256
-set background=dark
-colorscheme slate
-
 " Flake8 on write
 "autocmd BufWritePost *.py call Flake8()
-
 autocmd BufRead,BufNewFile *.jsm set filetype=javascript
 
 " Go
-au FileType go nmap <Leader>i <Plug>(go-info)
-au FileType go nmap <Leader>gd <Plug>(go-doc)
 au FileType go nmap <leader>r <Plug>(go-run)
 au FileType go nmap <leader>b <Plug>(go-build)
 au FileType go nmap <leader>s <Plug>(go-test)
+au FileType go nmap <Leader>i <Plug>(go-info)
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+" Go autoformatting
+autocmd BufWritePre *.go lua vim.lsp.buf.formatting()
+" Go autoimports
+autocmd BufWritePre *.go lua goimports(1000)
+
+let g:paredit_mode = 1
+cnoremap %% <C-R>=expand('%:h').'/'<cr>
+map <leader>e :edit %%
+
+" Lua configs
+
+lua << EOF
+require('lspinstall_conf')
+-- require('nvim-autopairs_conf')
+require('telescope_conf')
+require('treesitter_conf')
+EOF
