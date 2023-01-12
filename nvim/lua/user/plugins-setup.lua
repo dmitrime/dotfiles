@@ -33,8 +33,9 @@ return packer.startup(function(use)
 
   use("nvim-lua/plenary.nvim") -- lua functions that many plugins use
 
+  -- colorschemes
   use("lunarvim/colorschemes")
-  -- use("bluz71/vim-nightfly-guicolors")
+  use("bluz71/vim-nightfly-guicolors")
 
   use("christoomey/vim-tmux-navigator") -- tmux & split window navigation
 
@@ -104,6 +105,12 @@ return packer.startup(function(use)
 
   -- terminal
   use("akinsho/toggleterm.nvim")
+
+  -- jinja syntax
+  use("theHamsta/tree-sitter-jinja2")
+
+  -- salt
+  use("vmware-archive/salt-vim")
 
   if packer_bootstrap then
     require("packer").sync()
