@@ -109,6 +109,9 @@ return packer.startup(function(use)
   -- salt
   use("vmware-archive/salt-vim")
 
+  -- helm
+  use("towolf/vim-helm")
+
   if packer_bootstrap then
     require("packer").sync()
   end

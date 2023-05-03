@@ -51,6 +51,11 @@ lsp.set_preferences({
 })
 
 lsp.on_attach(function(client, bufnr)
+  -- disable diagnostic errors for helm charts
+  if vim.bo[bufnr].buftype ~= "" or vim.bo[bufnr].filetype == "helm" then
+    vim.diagnostic.disable()
+  end
+
   local opts = {buffer = bufnr, remap = false}
 
   vim.keymap.set("n", "gD", function() vim.lsp.buf.declaration() end, opts)
