@@ -1,47 +1,47 @@
-local options = {
-  backup = false,                          -- creates a backup file
-  clipboard = "unnamedplus",               -- allows neovim to access the system clipboard
-  cmdheight = 2,                           -- more space in the neovim command line for displaying messages
-  completeopt = { "menuone", "noselect" }, -- mostly just for cmp
-  conceallevel = 0,                        -- so that `` is visible in markdown files
-  fileencoding = "utf-8",                  -- the encoding written to a file
-  hlsearch = true,                         -- highlight all matches on previous search pattern
-  ignorecase = true,                       -- ignore case in search patterns
-  mouse = "a",                             -- allow the mouse to be used in neovim
-  pumheight = 10,                          -- pop up menu height
-  showmode = false,                        -- we don't need to see things like -- INSERT -- anymore
-  showtabline = 2,                         -- always show tabs
-  smartcase = true,                        -- smart case
-  smartindent = false,                     -- disable smart indentation
-  autoindent = false,                      -- disable auto indentation
-  splitbelow = true,                       -- force all horizontal splits to go below current window
-  splitright = true,                       -- force all vertical splits to go to the right of current window
-  swapfile = false,                        -- creates a swapfile
-  termguicolors = true,                    -- set term gui colors (most terminals support this)
-  timeoutlen = 1000,                       -- time to wait for a mapped sequence to complete (in milliseconds)
-  undofile = true,                         -- enable persistent undo
-  updatetime = 300,                        -- faster completion (4000ms default)
-  writebackup = false,                     -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
-  expandtab = true,                        -- convert tabs to spaces
-  shiftwidth = 2,                          -- the number of spaces inserted for each indentation
-  tabstop = 2,                             -- insert 2 spaces for a tab
-  cursorline = true,                       -- highlight the current line
-  number = true,                           -- set numbered lines
-  relativenumber = false,                  -- set relative numbered lines
-  numberwidth = 4,                         -- set number column width {default 4}
-  signcolumn = "yes",                      -- always show the sign column, otherwise it would shift the text each time
-  wrap = false,                            -- display lines as one long line
-  scrolloff = 8,
-  sidescrolloff = 8,
-  guifont = "monospace:h17", -- the font used in graphical neovim applications
-}
+local opt = vim.opt
 
-vim.opt.shortmess:append("c")
+opt.backup = false
+opt.clipboard = "unnamedplus"
+opt.cmdheight = 1
+opt.completeopt = { "menu", "menuone", "noselect" }
+opt.conceallevel = 0
+opt.fileencoding = "utf-8"
+opt.hlsearch = true
+opt.ignorecase = true
+opt.mouse = "a"
+opt.pumheight = 10
+opt.showmode = false
+opt.showtabline = 0
+opt.smartcase = true
+opt.smartindent = true
+opt.splitbelow = true
+opt.splitright = true
+opt.swapfile = false
+opt.termguicolors = true
+opt.timeoutlen = 300
+opt.undofile = true
+opt.updatetime = 250
+opt.writebackup = false
+opt.expandtab = true
+opt.shiftwidth = 2
+opt.tabstop = 2
+opt.cursorline = true
+opt.number = true
+opt.relativenumber = false
+opt.numberwidth = 4
+opt.signcolumn = "yes"
+opt.wrap = false
+opt.scrolloff = 8
+opt.sidescrolloff = 8
 
-for k, v in pairs(options) do
-  vim.opt[k] = v
-end
+opt.shortmess:append("c")
+opt.whichwrap:append("<,>,[,],h,l")
+opt.iskeyword:append("-")
 
-vim.cmd("set whichwrap+=<,>,[,],h,l")
-vim.cmd([[set iskeyword+=-]])
-vim.cmd([[set formatoptions-=cro]]) -- TODO: this doesn't seem to work
+-- formatoptions must be set via autocommand because ftplugins reset it
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "*",
+  callback = function()
+    vim.opt_local.formatoptions:remove({ "c", "r", "o" })
+  end,
+})

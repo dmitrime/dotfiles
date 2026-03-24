@@ -1,88 +1,93 @@
 return {
+  -- Neovim Lua API completion
   {
-    'folke/neodev.nvim',
-    event = { 'BufReadPre', 'BufNewFile' },
-    config = function()
-      require('neodev').setup()
-    end
-  },
-  {
-    'VonHeikemen/lsp-zero.nvim',
-    event = { 'BufReadPre', 'BufNewFile' },
-    cmd = 'Mason',
-    branch = 'v4.x',
-    dependencies = {
-      { 'neovim/nvim-lspconfig' },
-      {
-        'williamboman/mason.nvim',
-        build = function()
-          pcall(vim.cmd, 'MasonUpdate')
-        end
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {
+      library = {
+        -- Load luvit types when the `vim.uv` word is found
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
       },
-      { 'williamboman/mason-lspconfig.nvim' },
-      { 'hrsh7th/nvim-cmp' },
-      { 'hrsh7th/cmp-nvim-lsp' },
-      { 'L3MON4D3/LuaSnip' },
-      { 'SmiteshP/nvim-navic' }
+    },
+  },
+
+  -- LSP configuration
+  {
+    "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
     },
     config = function()
-      local lsp_zero = require('lsp-zero')
-      local navic = require('nvim-navic')
+      local lspconfig = require("lspconfig")
 
-      -- lsp_attach is where you enable features that only work
-      -- if there is a language server active in the file
-      local lsp_attach = function(client, bufnr)
-        local opts = {buffer = bufnr}
-
-        vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
-        vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
-        vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
-        vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
-        vim.keymap.set('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
-        vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
-        vim.keymap.set('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
-        vim.keymap.set('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
-        vim.keymap.set({'n', 'x'}, '<F3>', '<cmd>lua vim.lsp.buf.format({async = true})<cr>', opts)
-        vim.keymap.set('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
-
-        if client.server_capabilities.documentSymbolProvider then
-          navic.attach(client, bufnr)
-        end
-      end
-
-      lsp_zero.extend_lspconfig({
-        sign_text = true,
-        lsp_attach = lsp_attach,
-        capabilities = require('cmp_nvim_lsp').default_capabilities()
+      -- Diagnostics configuration
+      vim.diagnostic.config({
+        virtual_text = { spacing = 4, prefix = "●" },
+        signs = true,
+        underline = true,
+        update_in_insert = false,
+        severity_sort = true,
+        float = {
+          border = "rounded",
+          source = true,
+        },
       })
 
-      require('mason').setup({})
-      require('mason-lspconfig').setup({
+      -- LSP keymaps (set on attach)
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+        callback = function(ev)
+          local opts = { buffer = ev.buf }
+
+          vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+          vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+          vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+          vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+          vim.keymap.set("n", "go", vim.lsp.buf.type_definition, opts)
+          vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+          vim.keymap.set("n", "gs", vim.lsp.buf.signature_help, opts)
+          vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+          vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
+        end,
+      })
+
+      -- Mason setup
+      require("mason").setup()
+      require("mason-lspconfig").setup({
         ensure_installed = {
-          'pyright',
-          'lua_ls',
-          'gopls',
-          'rust_analyzer'
+          "pyright",
+          "lua_ls",
+          "gopls",
+          "rust_analyzer",
         },
         handlers = {
-          -- default handler for all servers
+          -- Default handler
           function(server_name)
-            require('lspconfig')[server_name].setup({})
+            lspconfig[server_name].setup({})
           end,
-          -- custom handler for lua_ls
+          -- lua_ls: lazydev.nvim handles vim globals automatically
           lua_ls = function()
-            require('lspconfig').lua_ls.setup({
+            lspconfig.lua_ls.setup({
               settings = {
                 Lua = {
-                  diagnostics = {
-                    globals = {'vim'}
-                  }
-                }
-              }
+                  workspace = { checkThirdParty = false },
+                  telemetry = { enable = false },
+                  completion = { callSnippet = "Replace" },
+                },
+              },
             })
           end,
-        }
+        },
       })
-    end
+    end,
+  },
+
+  -- Mason (tool installer UI)
+  {
+    "williamboman/mason.nvim",
+    cmd = "Mason",
+    build = ":MasonUpdate",
   },
 }

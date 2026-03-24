@@ -15,9 +15,8 @@ return {
     local trouble = require("trouble")
     local trouble_telescope = require("trouble.sources.telescope")
 
-    -- or create your custom action
     local custom_actions = transform_mod({
-      open_trouble_qflist = function(prompt_bufnr)
+      open_trouble_qflist = function(_)
         trouble.toggle("quickfix")
       end,
     })
@@ -27,8 +26,8 @@ return {
         path_display = { "smart" },
         mappings = {
           i = {
-            ["<C-k>"] = actions.move_selection_previous, -- move to prev result
-            ["<C-j>"] = actions.move_selection_next,     -- move to next result
+            ["<C-k>"] = actions.move_selection_previous,
+            ["<C-j>"] = actions.move_selection_next,
             ["<C-q>"] = actions.send_selected_to_qflist + custom_actions.open_trouble_qflist,
             ["<C-t>"] = trouble_telescope.open,
           },
@@ -37,14 +36,18 @@ return {
     })
 
     telescope.load_extension("fzf")
-
-    -- set keymaps
-    local keymap = vim.keymap -- for conciseness
-
-    keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
-    keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>", { desc = "Fuzzy find recent files" })
-    keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
-    keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
-    keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
   end,
+  keys = {
+    { "<leader>ff", "<cmd>Telescope find_files<CR>", desc = "Find files" },
+    { "<leader>fr", "<cmd>Telescope oldfiles<CR>", desc = "Recent files" },
+    { "<leader>fs", "<cmd>Telescope live_grep<CR>", desc = "Live grep" },
+    { "<leader>fc", "<cmd>Telescope grep_string<CR>", desc = "Grep under cursor" },
+    { "<leader>fb", "<cmd>Telescope buffers<CR>", desc = "Buffers" },
+    { "<leader>ft", "<cmd>TodoTelescope<CR>", desc = "Find TODOs" },
+    { "<leader>fh", "<cmd>Telescope help_tags<CR>", desc = "Help tags" },
+    -- Git
+    { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "Git commits" },
+    { "<leader>gb", "<cmd>Telescope git_branches<CR>", desc = "Git branches" },
+    { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "Git status" },
+  },
 }
